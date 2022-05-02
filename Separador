@@ -6,6 +6,7 @@ Sub Separador()
     colunas = Conta_colunas(w)
     separa_string (colunas)
     fix_names (colunas)
+    fix_gaps (colunas)
 
 End Sub
 
@@ -128,7 +129,32 @@ Public Function fix_names(colunas)
                                                                                                   
             Case "Bloco_BC"
                 Worksheets("Dados").Cells(a + 4, 6).Value = "Extintor BC"
+                                                                                                                  
+            Case "Bloco_E5"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa E5 (150x150)"
+                
+            Case Else
+                Worksheets("Dados").Cells(a + 4, 6).Value = ""    'Elimina os dados desnecessários
+                Worksheets("Dados").Cells(a + 4, 7).Value = ""
         End Select
     Next a
 
 End Function
+
+Public Function fix_gaps(colunas)
+
+    If (colunas = 0) Then
+        Exit Function
+    End If
+
+    Dim range_mat As String
+    Dim range_qnt As String
+    
+    range_mat = "G5:G" & (colunas + 5)
+    range_qnt = "F5:F" & (colunas + 5)
+    
+    range(range_qnt).SpecialCells(xlCellTypeBlanks).Delete
+    range(range_mat).SpecialCells(xlCellTypeBlanks).Delete
+
+End Function
+
