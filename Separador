@@ -1,0 +1,134 @@
+Sub Separador()
+    Dim w As Worksheet
+    Set w = Planilha1
+    Dim i As Integer
+    limpa_tabela (coluna_prev)
+    colunas = Conta_colunas(w)
+    separa_string (colunas)
+    fix_names (colunas)
+
+End Sub
+
+Public Function Conta_colunas(w)
+
+    i = 5
+    colunas = 0
+    
+    Do While (w.Cells(i, 3).Value <> "")
+        i = i + 1
+        colunas = colunas + 1
+    Loop
+
+    Conta_colunas = colunas
+
+End Function
+
+Public Function separa_string(colunas)
+    
+    Dim i As Integer
+    Dim text As String
+    Dim new_text As String
+    Dim new_text1 As String
+     
+    Do While (i < colunas)
+        text = Worksheets("Dados").Cells((i + 5), 3)
+        
+        For a = 1 To Len(text)
+            If (Mid$(text, a, 1) = ".") Then
+                Exit For
+            End If
+            new_text = new_text & Mid$(text, a, 1)
+        Next a
+        
+        b = Len(text)
+        
+        Do While (b > 0)
+            If (Mid$(text, b, 1) = ".") Then
+                Exit Do
+            End If
+            new_text1 = new_text1 & Mid$(text, b, 1)
+            b = b - 1
+        Loop
+        
+        Worksheets("Dados").Cells((i + 5), 7).Value = StrReverse(new_text1)
+        Worksheets("Dados").Cells((i + 5), 6).Value = new_text
+        new_text1 = ""
+        new_text = ""
+        i = i + 1
+    Loop
+    
+End Function
+
+Public Function limpa_tabela(colunas_anteriores)
+    Dim i As Integer
+    Do While (i < colunas_anteriores)
+        Worksheets("Dados").Cells((i + 5), 6).Value = ""
+        Worksheets("Dados").Cells((i + 5), 7).Value = ""
+        i = i + 1
+    Loop
+End Function
+
+Public Function coluna_prev()
+    Dim i As Integer
+    Do While (Worksheets("Dados").Cells((i + 5), 6).Value <> "")
+        i = i + 1
+    Loop
+    coluna_prev = i
+End Function
+
+Public Function fix_names(colunas)
+
+    For a = 1 To colunas
+        Select Case Worksheets("Dados").Cells(a + 4, 6)
+        
+            Case "Bloco_S1"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S1 (120x240)"
+        
+            Case "Bloco_S2"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S2 (120x240)"
+            
+            Case "Bloco_S3"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S3 (120x240)"
+                
+            Case "Bloco_S8"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S8 (120x240)"
+                
+            Case "Bloco_S9"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S9 (120x240)"
+                 
+            Case "Bloco_S12"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S12 (120x240)"
+                 
+            Case "Placa_S1_grande"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S1 (200x400)"
+                  
+            Case "Placa_S2_grande"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S2 (200x400)"
+                  
+            Case "Placa_S8_grande"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S8 (200x400)"
+                  
+            Case "Placa_S9_grande"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S9 (200x400)"
+                  
+            Case "Placa_S12_grande"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Placa S9 (200x400)"
+                                  
+            Case "Bloco_30LEDH"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "30 LED's"
+                                                  
+            Case "Bloco_ABC"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Extintor ABC"
+                                                                  
+            Case "Bloco_BC_CO2"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Extintor CO2"
+                                                                                  
+            Case "Bloco_LED_C"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Bloco LED 1200 Lúmens"
+                                                                                                  
+            Case "Bloco_BC"
+                Worksheets("Dados").Cells(a + 4, 6).Value = "Extintor BC"
+        End Select
+    Next a
+
+End Function
